@@ -6,7 +6,7 @@ python manage.py migrate --noinput
 # Collect static files
 python manage.py collectstatic --noinput
 
-# Setup scheduled tasks (only needs to run once, from web service)
+# Setup scheduled tasks
 python manage.py setup_schedule
 
 # Start gunicorn server (WEB SERVICE ONLY)

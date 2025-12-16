@@ -2,5 +2,5 @@ psycopg2-binary
 django
 gunicorn
 python-dotenv
-django-q2
+django-q
 redis

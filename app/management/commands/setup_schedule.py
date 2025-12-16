@@ -14,7 +14,7 @@ class Command(BaseCommand):
             name='log_random_number',
             func='app.tasks.log_random_number',
             schedule_type=Schedule.MINUTES,
-            minutes=10/60,  # 10 seconds = 0.167 minutes
+            minutes=10/60,  # 10 seconds
             repeats=-1,  # Repeat indefinitely
         )
         
