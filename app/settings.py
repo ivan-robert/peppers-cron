@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_q',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,41 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django-Q Configuration
+Q_CLUSTER = {
+    'name': 'peppers-cron',
+    'workers': 2,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': os.environ.get('REDIS_HOST', 'localhost'),
+        'port': int(os.environ.get('REDIS_PORT', 6379)),
+        'db': 0,
+        'password': os.environ.get('REDIS_PASSWORD', None),
+        'charset': 'utf-8',
+        'errors': 'strict',
+    }
+}
+
+Q_CLUSTER = {
+    'name': 'myproject',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 0, }
+}
+
