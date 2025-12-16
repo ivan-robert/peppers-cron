@@ -9,16 +9,16 @@ class Command(BaseCommand):
         # Delete existing schedule if it exists
         Schedule.objects.filter(name='log_random_number').delete()
         
-        # Create the schedule
+        # Create the schedule - every 10 seconds
         Schedule.objects.create(
             name='log_random_number',
             func='app.tasks.log_random_number',
-            schedule_type=Schedule.CRON,
-            cron='*/5 * * * *',  # Every 5 minutes
+            schedule_type=Schedule.MINUTES,
+            minutes=10/60,  # 10 seconds = 0.167 minutes
             repeats=-1,  # Repeat indefinitely
         )
         
         self.stdout.write(
-            self.style.SUCCESS('Successfully created scheduled task: log_random_number (every 5 minutes)')
+            self.style.SUCCESS('Successfully created scheduled task: log_random_number (every 10 seconds)')
         )
 
