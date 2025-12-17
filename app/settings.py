@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dotenv
+import urllib.parse as urlparse
 
 dotenv.load_dotenv()
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_q',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -134,7 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django-Q Configuration
 # Railway provides REDIS_URL as a single connection string
-import urllib.parse as urlparse
 
 redis_url = os.environ.get('REDIS_URL', 'redis://localhost:6379')
 url = urlparse.urlparse(redis_url)
