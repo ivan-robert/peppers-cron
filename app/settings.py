@@ -135,10 +135,23 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Django-Q Configuration
-# Railway provides REDIS_URL as a single connection string
+# Redis connection using environment variables
 
-redis_url = os.environ.get('REDIS_URL', 'redis://localhost:6379')
-url = urlparse.urlparse(redis_url)
+redis_url = os.environ.get('REDIS_URL') or os.environ.get('REDIS_PUBLIC_URL')
+
+if redis_url:
+    # Parse the Redis URL if provided as a complete connection string
+    url = urlparse.urlparse(redis_url)
+    redis_host = url.hostname
+    redis_port = url.port or 6379
+    redis_password = url.password
+    redis_user = url.username
+else:
+    # Fall back to individual environment variables
+    redis_host = os.environ.get('REDISHOST', 'localhost')
+    redis_port = int(os.environ.get('REDISPORT', 6379))
+    redis_password = os.environ.get('REDISPASSWORD') or os.environ.get('REDIS_PASSWORD')
+    redis_user = os.environ.get('REDISUSER')
 
 Q_CLUSTER = {
     'name': 'peppers-cron',
@@ -150,6 +163,11 @@ Q_CLUSTER = {
     'queue_limit': 500,
     'cpu_affinity': 1,
     'label': 'Django Q',
-    'orm': 'default',
+    'redis': {
+        'host': redis_host,
+        'port': redis_port,
+        'password': redis_password,
+        'db': 0,
+    }
 }
 

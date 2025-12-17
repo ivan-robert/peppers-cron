@@ -11,7 +11,7 @@ class Command(BaseCommand):
         Schedule.objects.filter(name='log_random_number').delete()
 
         schedule(
-            func='app.tasks.log_random_number',
+            func='app.masterclass.log_random_number',
             schedule_type=Schedule.MINUTES,
             minutes=1/10,  # 6 seconds
             repeats=-1,  # Repeat indefinitely
