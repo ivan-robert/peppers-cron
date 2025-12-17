@@ -140,6 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 redis_url = os.environ.get('REDIS_URL') or os.environ.get('REDIS_PUBLIC_URL')
 
 if redis_url:
+    print(f"Redis URL: {redis_url}")
     # Parse the Redis URL if provided as a complete connection string
     url = urlparse.urlparse(redis_url)
     redis_host = url.hostname
